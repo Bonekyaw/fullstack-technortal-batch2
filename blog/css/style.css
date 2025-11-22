@@ -23,6 +23,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .main-header {
@@ -54,6 +55,7 @@ body {
 
 .main-nav li {
   margin-left: 25px;
+  position: relative;
 }
 
 .main-nav a {
@@ -66,6 +68,28 @@ body {
 
 .main-nav a:hover {
   color: var(--primary-color);
+}
+
+.dropdown-content {
+  /* display: none; */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 180px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  z-index: 1100;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  color: var(--text-muted);
+}
+
+.burger-menu {
+  display: none;
 }
 
 .blog-section {
@@ -88,6 +112,14 @@ body {
 .blog-card {
   background-color: var(--card-bg);
   border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 168, 232, 0.2);
 }
 
 .blog-card img {
@@ -113,6 +145,11 @@ body {
 }
 
 .blog-card-content p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  overflow: hidden;
   font-size: 1rem;
   color: var(--text-color);
   margin-bottom: 1.5rem;
@@ -125,4 +162,69 @@ body {
   text-decoration: none;
   font-weight: 600;
   border-radius: 50px;
+  transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+  background-color: #0086c9;
+}
+
+.main-footer {
+  background-color: var(--card-bg);
+  padding: 3rem 0;
+  text-align: center;
+  border-top: 2px solid var(--border-color);
+}
+
+.main-footer h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.main-footer p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.subscribe-form {
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 2rem;
+}
+
+.subscribe-form input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 50px 0 0 50px;
+  border: 2px solid var(--border-color);
+  background-color: var(--dark-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.subscribe-form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.subscribe-form button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 0 50px 50px 0;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.subscribe-form button:hover {
+  background-color: #0086c9;
+}
+
+.copy-right {
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }

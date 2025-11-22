@@ -20,10 +20,21 @@
           <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#">Categories</a></li>
+            <li class="dropdown">
+              <a href="#" id="dropdown-toggle">Categories</a>
+              <div class="dropdown-content" id="dropdown-content">
+                <a href="#">JavaScript</a><a href="#">CSS</a
+                ><a href="#">Web Design</a><a href="#">Tutorials</a>
+              </div>
+            </li>
             <li><a href="#">Contact</a></li>
           </ul>
         </nav>
+        <button class="burger-menu" id="burger-menu">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </button>
       </div>
     </header>
     <main>
@@ -52,7 +63,10 @@
                 <p>
                   Struggling with layouts? This guide breaks down the
                   differences between CSS Flexbox and Grid, helping you decide
-                  which one is right for your next project.
+                  which one is right for your next project. Struggling with
+                  layouts? This guide breaks down the differences between CSS
+                  Flexbox and Grid, helping you decide which one is right for
+                  your next project.
                 </p>
                 <a href="#" class="read-more-btn">Read More</a>
               </div>
@@ -78,11 +92,16 @@
       <div class="container">
         <h3>Subscribe to Our Newsletter</h3>
         <p>Get the latest tech tips and tutorials delivered to your inbox.</p>
-        <form>
-          <label for="email">Email</label>
-          <input type="text" name="eamil" id="email" />
+        <form class="subscribe-form">
+          <input
+            type="text"
+            name="eamil"
+            id="email"
+            placeholder="Enter email"
+          />
           <button type="submit">Subscribe</button>
         </form>
+        <div class="copy-right">© 2025 TechInsights. All Rights Reserved.</div>
       </div>
     </footer>
   </body>
