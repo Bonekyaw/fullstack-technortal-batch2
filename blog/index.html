@@ -104,5 +104,33 @@
         <div class="copy-right">© 2025 TechInsights. All Rights Reserved.</div>
       </div>
     </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropdownToggle = document.getElementById("dropdown-toggle");
+        const dropdownContent = document.getElementById("dropdown-content");
+
+        dropdownToggle.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          dropdownContent.classList.toggle("show");
+        });
+
+        const burgerMenu = document.getElementById("burger-menu");
+        const mainNav = document.getElementById("main-nav");
+
+        burgerMenu.addEventListener("click", function () {
+          mainNav.classList.toggle("mobile-active");
+        });
+
+        document.addEventListener("click", function (event) {
+          if (
+            !dropdownToggle.contains(event.target) &&
+            !dropdownContent.contains(event.target)
+          ) {
+            dropdownContent.classList.remove("show");
+          }
+        });
+      });
+    </script>
   </body>
 </html>
