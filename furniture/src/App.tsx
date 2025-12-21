@@ -1,33 +1,56 @@
-import { useState } from "react";
 import "./App.css";
+import { useState } from "react";
 
-function Header() {
+// type HeaderProps = {
+//   title: string;
+//   body: string;
+// };
+
+interface TitleProps {
+  title: string;
+}
+
+interface HeaderPropsInterface extends TitleProps {
+  body: string;
+}
+
+function Header({ title, body }: HeaderPropsInterface) {
   return (
     <>
-      <h1>This is Title</h1>
-      <div>This is body</div>
+      <h1>This is {title}</h1>
+      <div>This is {body}</div>
     </>
   );
 }
 
+function Footer({ children }: { children: React.ReactNode }) {
+  return <div>{children}</div>;
+}
+
+// const TabButton = ({
+//   label,
+//   onPress,
+// }: {
+//   label: string;
+//   onPress: () => void;
+// }) => <button onClick={onPress}>{label}</button>;
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [counter, setCounter] = useState(0);
+  const date = new Date().toLocaleDateString();
+
+  const increment = () => {
+    setCounter((prevCounter) => prevCounter + 1);
+  };
 
   return (
-    // JSX - UI elements
     <>
-      <Header />
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header title="Furniture Store" body="Welcome to our furniture store!" />
+      <h2>Today is {date}</h2>
+      <button onClick={increment}>Count - {counter}</button>
+      <Footer>
+        <p>This is Footer</p>
+      </Footer>
     </>
   );
 }
