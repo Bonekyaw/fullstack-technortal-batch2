@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -47,6 +48,7 @@ function App() {
 
   return (
     <>
+      <Link to="/login">Go to Login</Link>
       <Header title="Furniture Store" body="Welcome to our furniture store!" />
       <h2>Today is {date}</h2>
       <button onClick={increment}>Count - {counter}</button>
