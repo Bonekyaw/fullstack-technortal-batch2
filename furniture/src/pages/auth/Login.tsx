@@ -1,4 +1,4 @@
-import { GalleryVerticalEnd } from "lucide-react";
+import { BedDouble } from "lucide-react";
 
 import { LoginForm } from "@/components/auth/login-form";
 
@@ -9,9 +9,9 @@ export default function LoginPage() {
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="#" className="flex items-center gap-2 font-medium">
             <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-              <GalleryVerticalEnd className="size-4" />
+              <BedDouble className="size-4" />
             </div>
-            Acme Inc.
+            Furniture Shop
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
