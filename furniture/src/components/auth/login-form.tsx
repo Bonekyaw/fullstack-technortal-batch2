@@ -1,22 +1,60 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import * as z from "zod";
+import { Link } from "react-router";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router";
+
+const formSchema = z.object({
+  phone: z
+    .string()
+    .min(7, "Phone number is too short!")
+    .max(12, "Phone number is too long!")
+    .regex(/^\d+$/, "Phone number is invalid."),
+  password: z
+    .string()
+    .min(8, "Password must be 8 digit long.")
+    .max(8, "Password must be 8 digit long.")
+    .regex(/^\d+$/, "Password is invalid."),
+  // .regex(/[0-9]/, "Password must contain at least one digit.")
+  // .regex(/[a-z]/, "Password must contain at least one lowercase character.")
+  // .regex(/[A-Z]/, "Password must contain at least one uppercase character."),
+});
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      phone: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    console.log(data);
+  }
+
   return (
-    <form className={cn("flex flex-col gap-6", className)} {...props}>
+    <form
+      id="login-form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      className={cn("flex flex-col gap-6", className)}
+      {...props}
+    >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold">Login to your account</h1>
@@ -24,24 +62,54 @@ export function LoginForm({
             Enter your phone below to login to your account
           </p>
         </div>
+        <Controller
+          name="phone"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="form-rhf-demo-title">
+                Phone Number
+              </FieldLabel>
+              <Input
+                {...field}
+                id="form-rhf-demo-title"
+                aria-invalid={fieldState.invalid}
+                placeholder="09778********"
+                type="text"
+                autoComplete="off"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="password"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <div className="flex items-center">
+                <FieldLabel htmlFor="form-rhf-demo-title">Password</FieldLabel>
+                <Link
+                  to="#"
+                  className="ml-auto text-sm underline-offset-4 hover:underline"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
+              <Input
+                {...field}
+                id="form-rhf-demo-title"
+                aria-invalid={fieldState.invalid}
+                type="password"
+                autoComplete="off"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
         <Field>
-          <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
-          <Input id="phone" type="tel" placeholder="09778********" required />
-        </Field>
-        <Field>
-          <div className="flex items-center">
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <a
-              href="#"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
-            >
-              Forgot your password?
-            </a>
-          </div>
-          <Input id="password" type="password" required />
-        </Field>
-        <Field>
-          <Button type="submit" onClick={() => navigate("/")}>
+          <Button type="submit" form="login-form">
             Login
           </Button>
         </Field>

@@ -1,25 +1,53 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import * as z from "zod";
+import { Link } from "react-router";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router";
+
+const formSchema = z.object({
+  phone: z
+    .string()
+    .min(7, "Phone number is too short!")
+    .max(12, "Phone number is too long!")
+    .regex(/^\d+$/, "Phone number is invalid."),
+});
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      phone: "",
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    console.log(data);
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form
+            id="login-form"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="p-6 md:p-8"
+          >
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
@@ -27,22 +55,36 @@ export function SignupForm({
                   Enter your phone below to create your account
                 </p>
               </div>
+              <Controller
+                name="phone"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-rhf-demo-title">
+                      Phone Number
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-rhf-demo-title"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="09778********"
+                      type="text"
+                      autoComplete="off"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                    <FieldDescription>
+                      We&apos;ll use this to contact you. We will not share your
+                      phone number with anyone else.
+                    </FieldDescription>
+                  </Field>
+                )}
+              />
+
               <Field>
-                <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="0977******"
-                  required
-                />
-                <FieldDescription>
-                  We&apos;ll use this to contact you. We will not share your
-                  phone number with anyone else.
-                </FieldDescription>
-              </Field>
-              <Field>
-                <Button type="submit">
-                  <Link to="/register/verify-otp">Create Account</Link>
+                <Button type="submit" form="login-form">
+                  Create Account
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
@@ -92,8 +134,9 @@ export function SignupForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our{" "}
+        <Link to="#">Terms of Service</Link> and{" "}
+        <Link to="#">Privacy Policy</Link>.
       </FieldDescription>
     </div>
   );

@@ -1,3 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Link } from "react-router";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,9 +23,23 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { Link } from "react-router";
+
+const formSchema = z.object({
+  pin: z.string().min(6, "OTP must be 6 digits long."),
+});
 
 export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      pin: "",
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    console.log(data);
+  }
+
   return (
     <Card {...props}>
       <CardHeader className="text-center">
@@ -27,13 +47,18 @@ export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
         <CardDescription>We sent a 6-digit code to your phone.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="otp" className="sr-only">
                 Verification code
               </FieldLabel>
-              <InputOTP maxLength={6} id="otp" required>
+              <InputOTP
+                maxLength={6}
+                id="otp"
+                pattern={REGEXP_ONLY_DIGITS}
+                required
+              >
                 <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
