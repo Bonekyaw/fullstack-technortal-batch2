@@ -1,6 +1,4 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import React from "react";
 import { Link } from "react-router";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 
@@ -24,20 +22,11 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-const formSchema = z.object({
-  pin: z.string().min(6, "OTP must be 6 digits long."),
-});
-
 export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      pin: "",
-    },
-  });
+  const [value, setValue] = React.useState("");
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+  function onSubmit() {
+    console.log(value);
   }
 
   return (
@@ -47,7 +36,7 @@ export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
         <CardDescription>We sent a 6-digit code to your phone.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
+        <form id="otp-form" onSubmit={onSubmit}>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="otp" className="sr-only">
@@ -58,6 +47,8 @@ export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
                 id="otp"
                 pattern={REGEXP_ONLY_DIGITS}
                 required
+                value={value}
+                onChange={(value) => setValue(value)}
               >
                 <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
                   <InputOTPSlot index={0} />
@@ -72,11 +63,11 @@ export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
                 Enter the 6-digit code sent to your phone.
               </FieldDescription>
             </Field>
-            <Button type="submit">
-              <Link to="/register/confirm-password">Verify</Link>
+            <Button type="submit" form="otp-form">
+              Verify
             </Button>
             <FieldDescription className="text-center">
-              Didn&apos;t receive the code? <a href="#">Resend</a>
+              Didn&apos;t receive the code? <Link to="#">Resend</Link>
             </FieldDescription>
           </FieldGroup>
         </form>
