@@ -1,3 +1,5 @@
 1. npm init -y
 2. npm install express --save 
-3.
+3. npm install nodemon typescript tsx ts-node  @types/node --save-dev
+4. npx tsc --init
+5. npm install dotenv
