@@ -3,3 +3,11 @@
 3. npm install nodemon typescript tsx ts-node  @types/node --save-dev
 4. npx tsc --init
 5. npm install dotenv
+
+For Prisma + Better-auth + Neon PostgreSQL
+
+- npm install ws @prisma/adapter-neon @neondatabase/serverless
+- npm install -D @types/ws
+- npm i -D bufferutil
+
+- npm install better-auth
