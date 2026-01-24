@@ -20,4 +20,9 @@ Link: https://neon.com/docs/guides/prisma
 
 - npm install better-auth
 - npx @better-auth/cli@latest secret
+- npx @better-auth/cli generate
+- npx prisma migrate dev --name add-auth-models
+- npx prisma generate
 
+Link: https://www.prisma.io/docs/guides/betterauth-nextjs
+Link: https://www.better-auth.com/docs/integrations/express
