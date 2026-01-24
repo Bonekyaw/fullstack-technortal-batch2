@@ -4,10 +4,20 @@
 4. npx tsc --init
 5. npm install dotenv
 
-For Prisma + Better-auth + Neon PostgreSQL
+Setup Prisma + Better-auth + Neon PostgreSQL
+
+- npm install prisma tsx @types/pg --save-dev
+- npm install @prisma/client @prisma/adapter-pg dotenv pg
+- npx prisma init --output ../src/generated/prisma
+- npx prisma generate
 
 - npm install ws @prisma/adapter-neon @neondatabase/serverless
 - npm install -D @types/ws
 - npm i -D bufferutil
 
+*** Update your Prisma Client instance: 
+Link: https://neon.com/docs/guides/prisma
+
 - npm install better-auth
+- npx @better-auth/cli@latest secret
+
