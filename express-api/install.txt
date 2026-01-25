@@ -2,7 +2,8 @@
 2. npm install express --save 
 3. npm install nodemon typescript tsx ts-node  @types/node --save-dev
 4. npx tsc --init
-5. npm install dotenv
+5. npm install dotenv cors
+6. npm install @types/cors --save-dev
 
 Setup Prisma + Better-auth + Neon PostgreSQL
 
